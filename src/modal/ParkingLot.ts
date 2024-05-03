@@ -12,7 +12,7 @@ export class ParkingLot {
 
     // validate duplicate cars
     if (this.cars.find((c) => c.registrationNumber === car.registrationNumber)) {
-      throw new Error("Car with registration number already exists");
+      throw new Error("\n   Car with registration number already exists");
     }
 
     // add car
@@ -30,7 +30,7 @@ export class ParkingLot {
 
     // throw error if registration number not found
     if (carIndex === -1) {
-      throw new Error("Car with given registration number not found");
+      throw new Error("\n   Car with given registration number not found");
     }
 
     // remove car
@@ -45,14 +45,14 @@ export class ParkingLot {
 
     // validate parked cars, throw error if no car parked
     if (this.cars.length === 0) {
-      console.log("No cars parked currently");
+      console.log("\n   No cars parked currently");
       return;
     }
 
     // list all parked cars
-    console.log("Parked Cars:");
+    console.log("\n   Parked Cars:");
     this.cars.forEach((car) => {
-      console.log(`Registration Number: ${car.registrationNumber}, Color: ${car.color}`);
+      console.log(`       Registration Number: ${car.registrationNumber}, Color: ${car.color}`);
     });
   }
 }

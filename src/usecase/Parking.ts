@@ -20,7 +20,7 @@ export class Parking implements ParkingInterface {
     addCar(car: Car): void {
         try {
             this.parkingLot.addCar(car);
-            console.log(`Car with registration number ${car.registrationNumber} parked successfully.`);
+            console.log(`\n   Car with registration number ${car.registrationNumber} parked successfully.`);
         } catch (error: any) {
             console.error(error.message);
         }
@@ -34,7 +34,7 @@ export class Parking implements ParkingInterface {
     removeCar(registrationNumber: string): void {
         try {
             this.parkingLot.removeCar(registrationNumber);
-            console.log(`Car with registration number ${registrationNumber} removed from parking lot.`);
+            console.log(`\n   Car with registration number ${registrationNumber} removed from parking lot.`);
         } catch (error: any) {
             console.error(error.message);
         }

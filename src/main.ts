@@ -1,6 +1,7 @@
 import { Car } from './modal/Car';
 import { ParkingLot } from './modal/ParkingLot';
 import { Parking } from './usecase/Parking';
+import { intro, outro, select, text } from '@clack/prompts';
 
 const readline = require('readline').createInterface({
   input: process.stdin,
@@ -17,39 +18,46 @@ const mainLoop = async () => {
     return;
   }
 
-  console.log(
-`
-======================= Car Management System =======================
-1. Add Car
-2. Remove Car
-3. List Car
-4. Exit
-`
-  );
+  // console.clear();
 
+  const action = await select({
+    message: 'Select Action.',
+    options: [
+      { value: '1', label: 'Add Car' },
+      { value: '2', label: 'Remove Car' },
+      { value: '3', label: 'List Car' },
+      { value: '4', label: 'Exit' },
+    ],
+  });
 
-  // Get user action
-  const action = await new Promise((resolve) => readline.question(
-    "Choose action : ",
-    resolve
-  ));
-
-  console.log(`\n=====================================================================\n`);
 
   switch (action) {
     case '1':
       // Get car details
-      const addRegNumber: string = await new Promise((resolve) => readline.question("Enter car registration number: ", resolve));
-      const color: string = await new Promise((resolve) => readline.question("Enter car color: ", resolve));
+      const addRegNumber = await text({
+        message: 'Enter car registration number:',
+        defaultValue: ''
+      });
 
-      parking.addCar(new Car(addRegNumber, color));
+      const color = await text({
+        message: 'Enter car color:',
+      });
+
+      let addRegNumberVal = typeof addRegNumber === 'string' ? addRegNumber : '';
+      let colorVal = typeof color === 'string' ? color : '';
+
+      parking.addCar(new Car(addRegNumberVal, colorVal));
 
       break;
     case '2':
       // Get registration number for removal
-      const removeRegNumber: string = await new Promise((resolve) => readline.question("Enter registration number to remove: ", resolve));
+      const removeRegNumber = await text({
+        message: 'Enter registration number to remove:',
+      });
 
-      parking.removeCar(removeRegNumber);
+      let removeRegNumberVal = typeof removeRegNumber === 'string' ? removeRegNumber : '';
+
+      parking.removeCar(removeRegNumberVal);
 
       break;
     case '3':
@@ -58,14 +66,12 @@ const mainLoop = async () => {
       break;
     case '4':
       readline.close();
-      console.log("Exiting Car Park Management System");
+      console.log("\n   Exiting Car Park Management System");
 
       break;
     default:
-      console.log("Invalid action. Please try again.");
+      console.log("\n   Invalid action. Please try again.");
   }
-
-  console.log(`\n=====================================================================\n`);
 
   // Continue the loop
   mainLoop();
